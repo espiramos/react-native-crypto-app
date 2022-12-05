@@ -50,8 +50,12 @@ const HomeCarousel = () => {
         <Carousel
           loop={false}
           width={width - 40}
+          windowSize={2}
           height={height * 0.15}
           autoPlay={false}
+          panGestureHandlerProps={{
+            activeOffsetX: [-15, 15],
+          }}
           ref={ref}
           data={carouselItems}
           scrollAnimationDuration={300}

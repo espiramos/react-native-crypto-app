@@ -29,10 +29,9 @@ const BottomTabs = () => {
             headerStyle: { backgroundColor: COLORS.screenBg },
             headerTitleStyle: { color: COLORS.white },
             tabBarStyle: {
-                minHeight: '10%',
                 backgroundColor: COLORS.primary,
-                paddingTop: height < shortScreensMaxHeight ? SIZES.base : SIZES.medium,
-                paddingBottom: height < shortScreensMaxHeight ? SIZES.small : SIZES.extraLarge + 12,
+                paddingTop: height < shortScreensMaxHeight ? 0 : SIZES.medium,
+                paddingBottom: height < shortScreensMaxHeight ? 0 : SIZES.extraLarge,
                 borderTopColor: 'transparent'
             },
             tabBarLabelStyle: {
@@ -40,7 +39,6 @@ const BottomTabs = () => {
                 fontFamily: FONTS.regular,
                 fontWeight: '400',
                 fontSize: SIZES.small,
-                lineHeight: 16,
                 textAlign: 'center'
             },
             tabBarActiveTintColor: COLORS.secondary,
@@ -88,7 +86,7 @@ const BottomTabs = () => {
                     tabBarLabel: 'Market',
                     tabBarActiveTintColor: COLORS.secondary,
                     tabBarIcon: ({ color, size }) => (
-                        <MarketIcon width={size * sizeMultiplier} height={size * sizeMultiplier} style={{ fill: color }} />
+                        <MarketIcon width={size * 0.6} height={size * 0.6} style={{ fill: color }} />
                     )
                 }}
             />

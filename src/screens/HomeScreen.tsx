@@ -9,7 +9,7 @@ import BalanceCard from '../components/BalanceCard';
 import HomeCarousel from '../components/HomeCarousel';
 import TopCoins from '../components/TopCoins';
 
-const wait = (timeout) => {
+const wait = (timeout: number) => {
     return new Promise(resolve => setTimeout(resolve, timeout));
 };
 

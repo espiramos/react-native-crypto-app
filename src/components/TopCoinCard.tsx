@@ -15,6 +15,7 @@ import EthereumIcon from '../../assets/icons/ethereum-icon.svg';
 import BinanceIcon from '../../assets/icons/binance-icon.svg';
 import ArrowDownIcon from '../../assets/icons/arrow-down-icon.svg';
 import ArrowUpIcon from '../../assets/icons/arrow-up-icon.svg';
+import Graph from "../../assets/icons/graph.svg";
 
 // Data format for rainbow charts
 type GraphDataType = {
@@ -31,7 +32,7 @@ type CoinTypeProps = {
 };
 
 const TopCoinCard = ({ id, name, symbol, color, refreshing }: CoinTypeProps) => {
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [currentPrice, setCurrentPrice] = useState(0);
     const [percentageChange, setPercentageChange] = useState(0);
     const [error, setError] = useState(false);
@@ -51,7 +52,7 @@ const TopCoinCard = ({ id, name, symbol, color, refreshing }: CoinTypeProps) => 
             .toFixed(2)
             .replace(/\d(?=(\d{3})+\.)/g, '$&,');
     };
-    
+
     // fetch data from CoinGecko
     const fetchCoinDetails = async () => {
         try {
@@ -90,6 +91,7 @@ const TopCoinCard = ({ id, name, symbol, color, refreshing }: CoinTypeProps) => 
             containerStyle={{ flex: 1, width: "100%", height: '100%' }}
             isLoading={loading}
             boneColor={COLORS.primary}
+            animationDirection={'horizontalRight'}
             highlightColor={COLORS.gray}
             layout={[
                 { key: 'someId', width: "100%", height: 63, marginBottom: 20, },
@@ -112,9 +114,13 @@ const TopCoinCard = ({ id, name, symbol, color, refreshing }: CoinTypeProps) => 
                         </View>
                     </View>
                     <View style={styles.center}>
-                        <ChartPathProvider data={{ points, smoothingStrategy: 'bezier' }}>
-                            <ChartPath height={24} stroke={color} width={100} />
-                        </ChartPathProvider>
+                        {!points ?
+                            <Graph width={100} height={30} />
+                            :
+                            <ChartPathProvider data={{ points, smoothingStrategy: 'bezier' }}>
+                                <ChartPath height={24} stroke={color} width={100} />
+                            </ChartPathProvider>
+                        }
                     </View>
                     <View style={styles.right}>
                         <Text style={{ ...styles.coinName, letterSpacing: 0.5, color: 'rgba(255, 255, 255, 0.8)' }}>${format(currentPrice)}</Text>
