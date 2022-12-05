@@ -1,6 +1,16 @@
 {
   "extends": "expo/tsconfig.base",
+  "baseUrl": ".",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    "noImplicitAny": false,
+    "allowJs": true,
+  },
+  "include": ["src/components", "src/custom.d.ts"],
+  "exclude": ["node_modules", "metro.config.js"],
+  "paths": {
+    "@ali/assets/*": ["assets/*"],
+    "@ali/components/*": ["src/components/*"],
+    "@ali/colors/*": ["src/theme/colors"]
   }
 }

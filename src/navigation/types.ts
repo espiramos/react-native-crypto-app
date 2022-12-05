@@ -1,31 +1,12 @@
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import type { CompositeNavigationProp, RouteProp } from '@react-navigation/native';
-import { BottomTabNavigationProp } from '@react-navigation/bottom-tabs';
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
 export type HomeStackNavigatorParamList = {
     Home: undefined;
-    Details: {
-        name: string;
-        birthYear: string;
-    };
+    Profile: undefined;
+    Notifications: undefined;
+    AllCoins: undefined;
 };
 
-// export type HomeScreenNavigationProp = NativeStackNavigationProp<
-//     HomeStackNavigatorParamList,
-//     'Details'
-// >;
-export type HomeScreenNavigationProp = CompositeNavigationProp<
-    NativeStackNavigationProp<HomeStackNavigatorParamList, 'Details'>,
-    BottomTabNavigationProp<BottomTabNavigatorParamList, 'Feed'>
+export type HomeScreenNavigationProp = NativeStackNavigationProp<
+    HomeStackNavigatorParamList
 >;
-
-export type DetailsScreenRouteProp = RouteProp<
-    HomeStackNavigatorParamList,
-    'Details'
->;
-
-export type BottomTabNavigatorParamList = {
-    HomeStack: HomeStackNavigatorParamList;
-    Feed: undefined;
-    Settings: undefined;
-};

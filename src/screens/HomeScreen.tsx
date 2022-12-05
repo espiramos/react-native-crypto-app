@@ -1,85 +1,59 @@
-import { StyleSheet, View, Text, Pressable, FlatList } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View, ScrollView, StyleSheet, RefreshControl } from 'react-native';
+import React, { useState, useCallback } from 'react';
 
-const DATA = [
-    {
-        id: 1,
-        name: 'Luke Skywalker',
-        birth_year: '19BBY',
-    },
-    {
-        id: 2,
-        name: 'C-3PO',
-        birth_year: '112BBY',
-    },
-    {
-        id: 3,
-        name: 'R2-D2',
-        birth_year: '33BBY',
-    },
-    {
-        id: 4,
-        name: 'Darth Vader',
-        birth_year: '41.9BBY',
-    },
-    {
-        id: 5,
-        name: 'Leia Organa',
-        birth_year: '19BBY',
-    },
-];
-interface Person {
-    name: String,
-    birthYear: String,
-}
-import { HomeScreenNavigationProp } from '../navigation/types';
+// import design library constants
+import { COLORS, SIZES } from '../constants';
+
+// import components
+import BalanceCard from '../components/BalanceCard';
+import HomeCarousel from '../components/HomeCarousel';
+import TopCoins from '../components/TopCoins';
+
+const wait = (timeout) => {
+    return new Promise(resolve => setTimeout(resolve, timeout));
+};
 
 const HomeScreen = () => {
-    const navigation = useNavigation<HomeScreenNavigationProp>();
-
-    const renderListItems = ({ item }) => {
-        return (
-            <Pressable
-                onPress={() =>
-                    navigation.navigate('Details', {
-                        name: item.name,
-                        birthYear: item.birth_year,
-                    })
-                }
-            >
-                <Text
-                    style={{ fontSize: 18, paddingHorizontal: 12, paddingVertical: 12 }}
-                >
-                    {item.name}
-                </Text>
-                <View
-                    style={{
-                        borderWidth: StyleSheet.hairlineWidth,
-                        borderColor: '#ccc',
-                    }}
-                />
-            </Pressable>
-        );
-    };
-
+    const [refreshing, setRefreshing] = useState(false);
+    const [refreshChildren, setRefreshChildren] = useState(false);
+    const onRefresh = useCallback(() => {
+        setRefreshing(true);
+        setRefreshChildren(prevVal => !prevVal)
+        wait(2000).then(() => setRefreshing(false));
+    }, []);
     return (
-        <View style={{ flex: 1, paddingTop: 10 }}>
-            <Pressable
-                onPress={() => navigation.navigate('Feed')}
-                style={{
-                    padding: 8,
-                    borderWidth: 1,
-                    borderRadius: 4,
-                    borderColor: 'red',
-                    margin: 12,
-                    alignItems: 'center',
-                }}
-            >
-                <Text style={{ fontSize: 16, fontWeight: '600' }}>Go to Feed screen</Text>
-            </Pressable>
-            <FlatList data={DATA} renderItem={renderListItems} />
-        </View>
+        <ScrollView style={{ flex: 1 }} refreshControl={
+            <RefreshControl
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                colors={[COLORS.gray]}
+                tintColor={COLORS.white}
+            />
+        }>
+            <View style={styles.container}>
+                <View style={styles.child}>
+                    <BalanceCard />
+                    <HomeCarousel />
+                </View>
+                <View style={styles.child}>
+                    <TopCoins refreshing={refreshChildren} />
+                </View>
+            </View>
+        </ScrollView>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingTop: SIZES.medium,
+        justifyContent: 'space-between',
+        flexDirection: 'column'
+    },
+    child: {
+        flex: 1,
+        paddingHorizontal: 20
+    }
+});
 
 export default HomeScreen;
