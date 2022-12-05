@@ -29,16 +29,18 @@ const BottomTabs = () => {
             headerStyle: { backgroundColor: COLORS.screenBg },
             headerTitleStyle: { color: COLORS.white },
             tabBarStyle: {
+                minHeight: '8%',
                 backgroundColor: COLORS.primary,
-                paddingTop: height < shortScreensMaxHeight ? 0 : SIZES.medium,
-                paddingBottom: height < shortScreensMaxHeight ? 0 : SIZES.extraLarge,
+                paddingTop: height < shortScreensMaxHeight ? SIZES.base : SIZES.medium,
+                paddingBottom: height < shortScreensMaxHeight ? SIZES.base : SIZES.large,
                 borderTopColor: 'transparent'
             },
             tabBarLabelStyle: {
                 fontStyle: 'normal',
                 fontFamily: FONTS.regular,
                 fontWeight: '400',
-                fontSize: SIZES.small,
+                fontSize: SIZES.base+1,
+                lineHeight: 16,
                 textAlign: 'center'
             },
             tabBarActiveTintColor: COLORS.secondary,
